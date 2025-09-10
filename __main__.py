@@ -22,6 +22,8 @@ def main():
                     help="Attempt EVERY operation for each service (up to --max-ops). Overrides selection heuristics.")
     ap.add_argument("--only-safe", action="store_true", help="Only call read-only ops (List/Get/Describe/Head).")
     ap.add_argument("--verbose", action="store_true", help="Print selected operations before execution.")
+    ap.add_argument("--threads", type=int, default=1, help="Concurrent workers per service (1 = sequential).")
+    ap.add_argument("--parallel-services", action="store_true", help="Run multiple services in parallel.")
     args = ap.parse_args()
 
     services = [s.strip() for s in args.aws_services.split(",") if s.strip()]
@@ -35,9 +37,11 @@ def main():
         max_ops_per_service=args.max_ops,
         include_dryrun=args.include_dryrun and not args.only_safe,
         aggressive=args.aggressive and not args.only_safe,
-        all_ops=args.all_ops,
+        all_ops=getattr(args, "all_ops", False),
         min_dryrun=args.min_dryrun,
         verbose=args.verbose,
+        threads=args.threads,
+        parallel_services=args.parallel_services,
     )
 
 if __name__ == "__main__":

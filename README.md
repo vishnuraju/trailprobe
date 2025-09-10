@@ -3,8 +3,10 @@
 ***Objective ***
 Generate AWS API calls so you can verify (manually) that CloudTrail records them.  
 
+**Disclaimer:** Use at your own risk. The author assumes no responsibility for any side effects, or consequences of running this tool. Caution: not battle tested
 
 ## Options
+```bash
   -h, --help            show this help message and exit
   --aws-services AWS_SERVICES
                         Comma-separated list, e.g., ec2,s3,lambda,bedrock
@@ -19,6 +21,9 @@ Generate AWS API calls so you can verify (manually) that CloudTrail records them
   --all-ops             Attempt EVERY operation for each service (up to --max-ops). Overrides selection heuristics.
   --only-safe           Only call read-only ops (List/Get/Describe/Head).
   --verbose             Print selected operations before execution.
+  --threads THREADS     Concurrent workers per service (1 = sequential).
+  --parallel-services   Run multiple services in parallel.
+```
 
 ## Usage
 ```bash
